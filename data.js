@@ -161,8 +161,8 @@ function displayTable(dati) {
     r += '<td>' + value.id + '</td>';
     r += '<td>' + value.firstName + '</td>';
     r += '<td>' + value.lastName + '</td>';
-    r += '<td data-id=' + value.id + '> <button type="button" class="btn btn-danger" id="btn-delete">Elimina</button>' + '</td>';
-    r += '<td data-id=' + value.id + '> <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalmodifica" id="btn-modifica">Modifica</button>' + '</td>';
+    r += '<td>' + value.id + '</td>';
+    r += '<td>' + value.id + '</td>';
     r += '<tr>' + '</tr>';
   });
   $("tbody").html(r);
