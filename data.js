@@ -44,7 +44,7 @@ $(document).ready(function () {
     }
     $.ajax({
       type: "POST",
-      url:  'http://localhost:8081/backrest/index.php/?nome='+nuovo.firstName+'&cognome='+nuovo.lastName,
+      url:  'http://localhost:8080/Frontend-backend/index.php/?nome='+nuovo.firstName+'&cognome='+nuovo.lastName,
 
       contentType: "application/json",
       
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: "PUT", //si dice di vooler aggiornare dal db
-      url: 'http://localhost:8081/backrest/index.php/?id='+data.id+'&nome='+data.firstName+'&cognome='+data.lastName,// url + id dell'utente selezionato
+      url: 'http://localhost:8080/Frontend-backend/index.php/?id='+data.id+'&nome='+data.firstName+'&cognome='+data.lastName,// url + id dell'utente selezionato
         success: function(data){
           chiamataServer(response['_links']['self']['href']);
 
@@ -101,7 +101,7 @@ $(document).ready(function () {
     id = td.data("id");
 
     
-    $.get('http://localhost:8081/backrest/index.php/?id=' + id, function(data) {
+    $.get('http://localhost:8080/Frontend-backend/index.php/?id=' + id, function(data) {
 
       $("#nome-m").val(data.firstName);
       $("#cognome-m").val(data.lastName);
