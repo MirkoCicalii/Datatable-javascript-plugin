@@ -10,17 +10,44 @@ $db="mydb";
 $conn =  mysqli_connect($servername, $user, $pass, $db) or die("Connessione non riuscita". mysqli_connect_error());
 
 
-
-if ($metodo === 'GET') {
+if ($metodo === 'POST') {
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
     $page=$_GET['page'];
     $size=$_GET['size'];
     $sql = "SELECT id,birth_date,first_name,last_name, gender,hire_date from employees limit ".$page*$size.",".$size;
-    $result = mysqli_query ($conn, $sql) or //risultato
+   
+   $result = mysqli_query ($conn, $sql);//risultato
+
+    $employees=array();
+
+
+    while ($row = mysqli_fetch_array ($result, MYSQLI_NUM)){
+      array_push($employees, array("id"=>$row[0], "birthDate"=>$row[1], "firstName"=>$row[2], "lastName"=>$row[3], "gender"=>$row[4], "hireDate"=>$row[5], 
+                  'links_' =>array( 'self'=>array('href'=>$index."?id=".$row[0]), 
+                              'employee'=>array('href'=>$index."?id=".$row[0]))
+                )); 
+    }
+
+
+    $ret = array();
+    $ret['data'] = $employees;
+    $ret['draw'] = 1;
+    $ret['recordsFiltered'] = 100;
+    $ret['recordsTotal'] = 100;
+
+
+  
+    
+    echo json_encode($ret,JSON_UNESCAPED_SLASHES);
+
+
+
+    /*
     die ("Query fallita " . mysqli_error($conn) . " " . mysqli_errno($conn));
     $employees=array();
     while ($row = mysqli_fetch_array ($result, MYSQLI_NUM)){
@@ -51,10 +78,11 @@ if ($metodo === 'GET') {
     echo json_encode($imp,JSON_UNESCAPED_SLASHES);
     $sql = "SELECT * from employees";
     $result = $conn->query($sql);
-
+    */
    
-} else 
-if ($metodo == "POST"){
+} 
+/*
+else  if ($metodo == "POST"){
     $nome= $_GET['nome'];  
     $cognome= $_GET['cognome'];  
     $sql = "INSERT INTO employees (first_name, last_name) VALUES ('$nome','$cognome')";
@@ -72,3 +100,5 @@ if ($metodo == "POST"){
 $sql = " DELETE from employees where  id = ".$id;
 $result = mysqli_query ($conn, $sql) or die ("Query fallita " . mysqli_error($conn) . " " . mysqli_errno($conn));  
 }
+
+*/
